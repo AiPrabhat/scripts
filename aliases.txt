@@ -1,14 +1,27 @@
+"Add these plugins and aliases in .zshrc"
+
+use theme : arrow
+
+plugins=(
+zsh-autosuggestions
+zsh-syntax-highlighting
+themes
+web-search
+dirhistory
+history
+)
+
+
 alias update="pkg update -y && pkg upgrade -y"
 
-alias install='pkg install -y'
-alias installed='pkg list-installed'
-
+alias install='pkg install -y'              
+alias installed='pkg list-installed'        
 alias l='ls --color=auto'
 alias ls='ls -C'
 alias ll='ls -lh'
 alias la='ls -la'
 alias lc='ls -lC'
-alias ld='ls -d */'
+alias ld='ls -d */'                         
 alias lt='ls -lt'
 alias lr='ls -R'
 alias lh='ls -lh --color=auto'
@@ -21,7 +34,7 @@ alias ip='ip addr show'
 alias netstat='netstat -tuln'
 alias publicip='curl ifconfig.me'
 
-alias sysinfo='top -n 1'
+alias sysinfo='top -n 1'                    
 alias mem='free -h'
 alias cpu='top -n 1 | grep Cpu'
 alias disk='df -h'
@@ -41,4 +54,6 @@ alias zshrc='nano ~/.zshrc'
 
 alias notebook='jupyter notebook'
 alias py='python'
+
+cd ~/storage/shared/home
 

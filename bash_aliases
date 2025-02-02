@@ -1,101 +1,113 @@
 
 # System Management:
-alias update='sudo apt update && sudo apt upgrade -y'         # Update and upgrade all packages
-alias install='sudo apt install -y'                           # Install packages
-alias remove='sudo apt remove -y'                             # Remove packages
-alias autoremove='sudo apt autoremove -y'                     # Remove unused packages
-alias clean='sudo apt clean'                                  # Clean up cached packages
+alias update='sudo apt update && sudo apt upgrade -y'
+alias install='sudo apt install -y'
+alias remove='sudo apt remove -y'
+alias autoremove='sudo apt autoremove -y'
+alias clean='sudo apt clean'
 
 # System Resource Monitoring:
-alias sys='htop'                                              # Interactive system monitor (requires htop)
-alias uptime='uptime -p'                                      # Show system uptime in a human-readable format
-alias diskusage='df -h'                                       # Show disk usage in human-readable format
-alias du='du -sh'                                             # Show disk usage of a directory (human-readable)
-alias mem='free -h'                                           # Show memory usage in human-readable format
-alias cpu='top -n 1 | grep Cpu'                               # Show CPU usage (one snapshot)
-alias top='top -n 1'                                          # Show system process info (one snapshot)
+alias sys='htop'
+alias uptime='uptime -p'
+alias df='df -h'
+alias du='du -sh'
+alias mem='free -h'
+alias cpu='top -n 1 | grep Cpu'
+alias top='top -n 1'
 
 # File Operations:
-alias rmf='rm -rf'                                            # Force remove files and directories
-alias rm='rm -i'                                              # Interactive remove (prompt before deleting)
-alias rmdir='rmdir --ignore-fail-on-non-empty'                # Remove empty directories
-alias cp='cp -i'                                              # Interactive copy (confirm before overwriting)
-alias mv='mv -i'                                              # Interactive move (confirm before overwriting)
+rm_interactive() {
+    echo -n "Remove the following files: $*? [Y/n]: "
+    read -r response
+    response=${response,,}  # Convert to lowercase
+    if [[ "$response" == "y" || "$response" == "" ]]; then
+        /bin/rm "$@"
+    else
+        echo "Skipped all files."
+    fi
+}
+alias rm=rm_interactive
+alias rmdir='rmdir --ignore-fail-on-non-empty'
 
 # Navigation:
-alias ..='cd ..'                                              # Go up one directory
-alias ...='cd ../..'                                          # Go up two directories
-alias ....='cd ../../..'                                      # Go up three directories
-alias .....='cd ../../../..'                                  # Go up four directories
-alias ......='cd ../../../../..'                              # Go up five directories
-alias .......='cd ../../../../../..'                          # Go up six directories
-alias docs='cd /sdcard/Documents'                             # Go to Documents directory
-alias downloads='cd /sdcard/Downloads'                        # Go to Downloads directory
-alias home='cd /sdcard'                                       # Go to the storsge directory
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias docs='cd /sdcard/Documents'
+alias dl='cd /sdcard/Downloads'
+alias home='cd /sdcard'
+alias ds='cd /sdcard/Android/ds'
+alias termux='cd /data/data/com.termux/files/home'
 
 # Networking:
-alias netstat='netstat -tuln'                                 # Show active network connections and listening ports
-alias ipshow='ip a'                                           # Show IP address information
-alias trace='traceroute'                                      # Trace the route packets take to a network host
-alias iftop='sudo iftop'                                      # Monitor network usage per interface (install iftop)
-alias pingcheck='ping -c 4'                                   # Ping a host with 4 packets
-alias publicip='curl ifconfig.me'                             # Show public IP address
+alias netstat='netstat -tuln'
+alias ipshow='ip a'
+alias trace='traceroute'
+alias iftop='sudo iftop'
+alias pingcheck='ping -c 4'
+alias publicip='curl ifconfig.me'
 
 # Git Operations:
-alias gs='git status'                                         # Show git status
-alias ga='git add .'                                          # Add all changes to staging
-alias gc='git commit -m'                                      # Commit changes with a message
-alias gp='git push'                                           # Push changes to remote repository
-alias gl='git pull'                                           # Pull the latest changes from remote
-alias gco='git checkout'                                      # Switch branches or checkout files
-alias glog='git log --oneline --graph --decorate'             # Show a simplified git log graph
-alias gclone='git clone'                                      # Clone repos
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git pull'
+alias gco='git checkout'
+alias glog='git log --oneline --graph --decorate'
+alias gclone='git clone'
 
 # Search and File Management:
-alias findf='find . -type f -name'                            # Search for files by name
-alias findd='find . -type d -name'                            # Search for directories by name
-alias grep='grep --color=auto'                                # Highlight search results in color
-alias grepall='grep -r --color=auto'                          # Recursive search in all files
-alias backup='tar -czvf'                                      # Backup files to a compressed tarball
-alias untar='tar -xzvf'                                       # Extract a tarball
-alias mkcd='mkdir -p $1 && cd $1'                             # Create a directory and navigate into it
-alias cat='cat | less'                                        # View large files with paging
-alias tailf='tail -f'                                         # Follow a file in real time (useful for logs)
+alias findf='find . -type f -name'
+alias findd='find . -type d -name'
+alias grep='grep --color=auto'
+alias grepall='grep -r --color=auto'
+alias backup='tar -czvf'
+alias untar='tar -xzvf'
+alias mkcd='mkdir -p $1 && cd $1'
+alias tailf='tail -f'
 
 # System Logs and Information:
-alias sysinfo='top -n 1'                                      # Show one snapshot of system info
-alias last='last -a'                                          # Show last login details, including IP addresses
-alias dmesg='dmesg | less'                                    # View kernel ring buffer logs
+alias sysinfo='top -n 1'
+alias last='last -a'
+alias dmesg='dmesg | less'
 
 # Package Management (APT):
-alias aptupdate='sudo apt update'                             # Update package lists
-alias aptupgrade='sudo apt upgrade -y'                        # Upgrade installed packages
-alias aptdist-upgrade='sudo apt dist-upgrade -y'              # Upgrade packages to their latest versions
-
-# Python and Jupyter:
-alias py='python3'                                            # Run Python 3
-alias notebook='conda activate tf && jupyter notebook'        # Launch Jupyter notebook
-alias jlab='conda activate tf && jupyter-lab'                 # Launch Jupyter Lab
-alias tf='conda activate tf'
+alias aptupdate='sudo apt update'
+alias aptupgrade='sudo apt upgrade -y'
+alias aptdist-upgrade='sudo apt dist-upgrade -y'
 
 # Directory Listing
-alias l='ls -lF --color=auto'                                 # Long listing with file type indicators and color
-alias ls='ls -F --color=auto'                                 # Basic listing with color and file type indicators
-alias ll='ls -lh --color=auto'                                # Long listing with human-readable sizes and color
-alias la='ls -la --color=auto'                                # Long listing of all files (including hidden) with color
-alias lt='ls -lt --color=auto'                                # Long listing sorted by modification time
-alias lc='ls -lC --color=auto'                                # Column-based listing with color
-alias ld='ls -d */ --color=auto'                              # List only directories with color
-alias lr='ls -R --color=auto'                                 # Recursively list directories with color
-alias lh='ls -lh --color=auto'                                # Long listing with human-readable sizes and color
+alias l='ls -lF --color=auto'
+alias ls='ls -F --color=auto'
+alias ll='ls -lh --color=auto'
+alias la='ls -la --color=auto'
+alias lt='ls -lt --color=auto'
+alias lc='ls -lC --color=auto'
+alias ld='ls -d */ --color=auto'
+alias lr='ls -R --color=auto'
+alias lh='ls -lh --color=auto'
 
-# Others:
-alias cls='clear'                                             # Clear the terminal
-alias time='date +"%H:%M:%S"'                                 # Show current time in HH:MM:SS format
-alias datetime='date +"%Y-%m-%d %H:%M:%S"'                    # Show current date and time
-alias pstree='pstree -p'                                      # Show a tree of running processes with process IDs
-alias ps='ps aux'                                             # Show all running processes
-alias jobs='jobs -l'                                          # List current jobs
+# Basic:
+alias cls='clear'
+alias clear='/usr/bin/clear'
+alias time='date +"%H:%M:%S"'
+alias datetime='date +"%Y-%m-%d %H:%M:%S"'
+alias pstree='pstree -p'
+alias ps='ps aux'
+alias jobs='jobs -l'
+
+# Python and Jupyter:
+alias py='python3'
+alias pip='pip3'
+alias notebook='conda activate tf && jupyter notebook /sdcard/Android/ds'
+alias jlab='conda activate tf && jupyter-lab /sdcard/Android/ds'
+alias tf='conda activate tf'
+alias cact='conda activate'
+alias cdeact='conda deactivate'
 
 # Edit .zshrc or .bashrc (depending on shell)
 alias zshrc='nano ~/.zshrc'
